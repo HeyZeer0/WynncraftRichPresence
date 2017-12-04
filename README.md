@@ -1,6 +1,6 @@
 # WynncraftRichPresence <img align="right" src="http://dl.heyzeer0.cf/WynnRP/discord.png">
 WynncraftRichPresence is a simple mod which allows integration with discord.
-[![Build Status](http://ci.heyzeer0.cf/buildStatus/icon?job=WynncraftRichPresence)](http://ci.heyzeer0.cf/job/WynncraftRichPresence/)
+[![Build Status](http://ci.heyzeer0.cf/buildStatus/icon?job=WynncraftRichPresence)](http://ci.heyzeer0.cf/job/WynncraftRichPresence/)</br>
 
 What Version?
 ========
