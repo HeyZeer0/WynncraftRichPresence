@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/maven'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'net.heyzeer0.wrp'
+version '1.0'
+archivesBaseName = "WynncraftRichPresence"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+    version = "1.11.2-13.20.1.2386"
+    runDir = "run"
+    mappings = "stable_29"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+dependencies {
+    embed 'com.jagrosh:DiscordIPC:+'
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+reobfJar {
+    dependsOn shadowJar
+}
+
+shadowJar {
+    baseName = 'WynncraftRichPresence-1.0'
+    classifier = null
+    version = null
+    configurations = [project.configurations.compile]
+    relocate "org.slf4j", "net.heyzeer0.wrp.relocate.org.slf4j"
+    relocate "org.json", "net.heyzeer0.wrp.relocate.org.json"
+}
