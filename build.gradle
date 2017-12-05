@@ -21,11 +21,12 @@ apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group 'net.heyzeer0.wrp'
-version '1.0'
+version '1.0.1'
 archivesBaseName = "WynncraftRichPresence"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 minecraft {
     version = "1.11.2-13.20.1.2386"
@@ -71,7 +72,7 @@ reobfJar {
 }
 
 shadowJar {
-    baseName = 'WynncraftRichPresence-1.0'
+    baseName = archivesBaseName + "-" + version
     classifier = null
     version = null
     configurations = [project.configurations.compile]

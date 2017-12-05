@@ -16,7 +16,7 @@ import java.net.URL;
  * Created by HeyZeer0 on 04/12/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class ChatEvent {
+public class ChatEvents {
 
     @SubscribeEvent
     @SideOnly(value = Side.CLIENT)
@@ -32,6 +32,7 @@ public class ChatEvent {
                     Main.onServer = true;
 
                     Main.startUpdateRegionName();
+
 
                 }catch (Exception ex) { Main.logger.warn("Cannot update status", ex); }
             }).start();
