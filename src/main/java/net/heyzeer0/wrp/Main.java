@@ -5,7 +5,10 @@ import com.jagrosh.discordipc.entities.DiscordBuild;
 import com.jagrosh.discordipc.entities.RichPresence;
 import net.heyzeer0.wrp.events.ChatEvents;
 import net.heyzeer0.wrp.events.ServerEvents;
+import net.heyzeer0.wrp.profiles.LocationProfile;
 import net.heyzeer0.wrp.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +32,7 @@ public class Main {
     public static String actualServer = "none";
     public static boolean onServer = false;
     public static String location = "Waiting";
+    public static int locId = -1;
 
     public static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     public static ScheduledFuture updateTimer;
@@ -42,6 +46,8 @@ public class Main {
 
             MinecraftForge.EVENT_BUS.register(new ServerEvents());
             MinecraftForge.EVENT_BUS.register(new ChatEvents());
+
+            Utils.updateRegions();
 
         }catch (Exception ignored) {}
     }
@@ -62,19 +68,36 @@ public class Main {
 
     public static void startUpdateRegionName() {
          updateTimer = executor.scheduleAtFixedRate(() -> {
-            try{
-                Utils.getBossBarNames().forEach(sc -> {
-                    if(!sc.contains("-") && !sc.contains("double") && !sc.contains("dungeon")) {
-                        String loc = Utils.stripColor(sc).replaceAll("\\[(.*?)]", "");
-                        if(!location.equalsIgnoreCase(loc)) {
-                            location = loc;
-                            Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
-                        }
-                    }
-                });
-            }catch (Exception ignored) { }
 
-        }, 0, 1, TimeUnit.SECONDS);
+             if(locId == -1) {
+                 EntityPlayerSP pl = Minecraft.getMinecraft().player;
+                 for(int i = 0; i <= Utils.locations.size(); i++) {
+                     LocationProfile pf = Utils.locations.get(i);
+                     if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
+                         location = pf.getName();
+                         locId = i;
+
+                         Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
+                         break;
+                     }
+                 }
+             }else{
+                 EntityPlayerSP pl = Minecraft.getMinecraft().player;
+                 if(!Utils.locations.get(locId).insideArea((int)pl.posX, (int)pl.posZ)) {
+                     for(int i = 0; i <= Utils.locations.size(); i++) {
+                         LocationProfile pf = Utils.locations.get(i);
+                         if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
+                             location = pf.getName();
+                             locId = i;
+
+                             Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
+                             break;
+                         }
+                     }
+                 }
+             }
+
+        }, 0, 3, TimeUnit.SECONDS);
     }
 
 }

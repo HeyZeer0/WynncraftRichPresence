@@ -1,15 +1,13 @@
 package net.heyzeer0.wrp.utils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiBossOverlay;
-import net.minecraft.world.BossInfoLerping;
+import net.heyzeer0.wrp.Main;
+import net.heyzeer0.wrp.profiles.LocationProfile;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 
-import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.regex.Pattern;
 
 /**
  * Created by HeyZeer0 on 04/12/2017.
@@ -17,45 +15,27 @@ import java.util.regex.Pattern;
  */
 public class Utils {
 
-    public static Field bossField;
+    public static ArrayList<LocationProfile> locations = new ArrayList<>();
 
-    public static final char COLOR_CHAR = '\u00A7';
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf(COLOR_CHAR) + "[0-9A-FK-OR]");
+    public static void updateRegions() {
+        new Thread(() -> {
+            try{
+                URLConnection st = new URL("https://api.wynncraft.com/public_api.php?action=territoryList").openConnection();
+                st.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 
-    public static List<String> getBossBarNames() throws Exception {
-        if(Minecraft.getMinecraft() == null || Minecraft.getMinecraft().ingameGUI == null || Minecraft.getMinecraft().ingameGUI.getBossOverlay() == null) {
-            return null;
-        }
+                JSONObject main = new JSONObject(IOUtils.toString(st.getInputStream())).getJSONObject("territories");
 
-        GuiBossOverlay bossOverlay = Minecraft.getMinecraft().ingameGUI.getBossOverlay();
-        if(bossField == null) {
-            bossField = GuiBossOverlay.class.getDeclaredField("field_184060_g");
+                for(String key : main.keySet()) {
+                    if(main.getJSONObject(key).has("location")) {
+                        JSONObject loc = main.getJSONObject(key).getJSONObject("location");
+                        locations.add(new LocationProfile(key, loc.getInt("startX"), loc.getInt("startY"), loc.getInt("endX"), loc.getInt("endY")));
+                    }
+                }
 
-            if(bossField == null) {
-                return null;
-            }
+            }catch (Exception ex) {
+                Main.logger.warn("Error captured while trying to connect to Wynncraft location api", ex);}
 
-            bossField.setAccessible(true);
-        }
-
-        List<String> names = new ArrayList<>();
-
-        if(names == null) { return null; }
-
-        Map<UUID, BossInfoLerping> boss = (Map<UUID, BossInfoLerping>) bossField.get(bossOverlay);
-        if(boss == null) { return null; }
-        for (BossInfoLerping bIL : boss.values()) { names.add(bIL.getName().getFormattedText()); }
-
-        return names;
+        }).start();
     }
-
-    public static String stripColor(final String input) {
-        if (input == null) {
-            return null;
-        }
-
-        return STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
-    }
-
 
 }
