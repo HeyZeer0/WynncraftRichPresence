@@ -29,9 +29,9 @@ public class LocationGUI extends Gui {
         if(event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE) {
             return;
         }
-        //if(Main.onServer && !Main.location.equalsIgnoreCase("Waiting")) {
+        if(Main.onServer && !Main.location.equalsIgnoreCase("Waiting")) {
             drawString(mc.fontRendererObj, "§a§l" + Main.location, 10, 10, -1);
-        //}
+        }
     }
 
 }
