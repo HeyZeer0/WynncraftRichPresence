@@ -32,7 +32,7 @@ public class LocationGUI extends Gui {
 
     @SubscribeEvent(priority= EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event) {
-        if(!ConfigManager.enteringNotifier /*|| !Main.onServer*/) {
+        if(!ConfigManager.enteringNotifier || !Main.onServer) {
             return;
         }
         if(event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE) {
