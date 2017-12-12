@@ -5,6 +5,8 @@ import com.jagrosh.discordipc.entities.DiscordBuild;
 import com.jagrosh.discordipc.entities.RichPresence;
 import net.heyzeer0.wrp.events.ChatEvents;
 import net.heyzeer0.wrp.events.ServerEvents;
+import net.heyzeer0.wrp.guis.LocationGUI;
+import net.heyzeer0.wrp.guis.UpdateGUI;
 import net.heyzeer0.wrp.profiles.LocationProfile;
 import net.heyzeer0.wrp.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -47,6 +49,9 @@ public class Main {
             MinecraftForge.EVENT_BUS.register(new ServerEvents());
             MinecraftForge.EVENT_BUS.register(new ChatEvents());
 
+            MinecraftForge.EVENT_BUS.register(new UpdateGUI(Minecraft.getMinecraft()));
+            MinecraftForge.EVENT_BUS.register(new LocationGUI(Minecraft.getMinecraft()));
+
             Utils.updateRegions();
 
         }catch (Exception ignored) {}
@@ -68,14 +73,18 @@ public class Main {
 
     public static void startUpdateRegionName() {
          updateTimer = executor.scheduleAtFixedRate(() -> {
-
              if(locId == -1) {
                  EntityPlayerSP pl = Minecraft.getMinecraft().player;
-                 for(int i = 0; i <= Utils.locations.size(); i++) {
+                 for(int i = 0; i < Utils.locations.size(); i++) {
                      LocationProfile pf = Utils.locations.get(i);
+                     Main.logger.warn("área " + pf);
                      if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
                          location = pf.getName();
                          locId = i;
+
+                         Main.logger.warn("achei a área " + pf);
+                         Main.logger.warn("achei a área " + pf);
+                         Main.logger.warn("achei a área " + pf);
 
                          Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
                          break;
@@ -84,11 +93,20 @@ public class Main {
              }else{
                  EntityPlayerSP pl = Minecraft.getMinecraft().player;
                  if(!Utils.locations.get(locId).insideArea((int)pl.posX, (int)pl.posZ)) {
-                     for(int i = 0; i <= Utils.locations.size(); i++) {
+                     Main.logger.warn("Não ta dentro da área");
+                     Main.logger.warn("Não ta dentro da área");
+                     Main.logger.warn("Não ta dentro da área");
+                     Main.logger.warn("Não ta dentro da área");
+                     for(int i = 0; i < Utils.locations.size(); i++) {
                          LocationProfile pf = Utils.locations.get(i);
+                         Main.logger.warn("área " + pf);
                          if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
                              location = pf.getName();
                              locId = i;
+
+                             Main.logger.warn("achei a área " + pf);
+                             Main.logger.warn("achei a área " + pf);
+                             Main.logger.warn("achei a área " + pf);
 
                              Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
                              break;

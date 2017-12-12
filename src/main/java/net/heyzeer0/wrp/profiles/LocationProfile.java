@@ -24,7 +24,9 @@ public class LocationProfile {
 
     public boolean insideArea(int x, int z) {
         if (startX <= x && endX >= x) {
+            Main.logger.warn(startX + " < " + x + " && " + endX + " > " + z);
             if (startZ <= z && endZ >= z) {
+                Main.logger.warn(startZ + " < " + x + " && " + endZ + " > " + z);
                 return true;
             }
         }
@@ -32,7 +34,7 @@ public class LocationProfile {
     }
 
     public String toString() {
-        return name + "|" + startX + "|" + startZ + "|" + endX + "|" + startZ;
+        return name + "|" + startX + "|" + startZ + "|" + endX + "|" + endZ;
     }
 
 }
