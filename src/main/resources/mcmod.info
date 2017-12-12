@@ -3,7 +3,7 @@
     "modid": "wynnrp",
     "name": "WynncraftRichPresence",
     "description": "A simple mod who integrates Wynncraft with discord",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "mcversion": "${mcversion}",
     "url": "www.heyzeer0.cf",
     "updateUrl": "",

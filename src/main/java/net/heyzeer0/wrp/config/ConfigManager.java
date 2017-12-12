@@ -17,12 +17,12 @@ public class ConfigManager {
 
     private static Configuration config;
 
-    public static boolean useOverlay = true;
+    public static boolean enteringNotifier = true;
 
     public static void registerConfig(FMLPreInitializationEvent e) {
         config = new Configuration(e.getSuggestedConfigurationFile());
 
-        useOverlay = config.getBoolean("useOverlay", "main", true, "Shows location overlay");
+        enteringNotifier = config.getBoolean("enteringNotifier", "main", true, "You are now entering overlay");
 
         config.save();
 
@@ -37,7 +37,7 @@ public class ConfigManager {
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(Reference.MOD_ID)) {
             config.save();
-            useOverlay = config.getBoolean("useOverlay", "main", true, "Shows location overlay");
+            enteringNotifier = config.getBoolean("enteringNotifier", "main", true, "You are now entering overlay");
         }
     }
 

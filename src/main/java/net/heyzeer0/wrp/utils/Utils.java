@@ -32,6 +32,8 @@ public class Utils {
                     }
                 }
 
+                locations.add(new LocationProfile("Rodoroc", 1009, -5231, 1263, -5057));
+
             }catch (Exception ex) {
                 Main.logger.warn("Error captured while trying to connect to Wynncraft location api", ex);}
 

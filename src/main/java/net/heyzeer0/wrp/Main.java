@@ -77,14 +77,9 @@ public class Main {
                  EntityPlayerSP pl = Minecraft.getMinecraft().player;
                  for(int i = 0; i < Utils.locations.size(); i++) {
                      LocationProfile pf = Utils.locations.get(i);
-                     Main.logger.warn("área " + pf);
                      if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
                          location = pf.getName();
                          locId = i;
-
-                         Main.logger.warn("achei a área " + pf);
-                         Main.logger.warn("achei a área " + pf);
-                         Main.logger.warn("achei a área " + pf);
 
                          Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
                          break;
@@ -93,20 +88,11 @@ public class Main {
              }else{
                  EntityPlayerSP pl = Minecraft.getMinecraft().player;
                  if(!Utils.locations.get(locId).insideArea((int)pl.posX, (int)pl.posZ)) {
-                     Main.logger.warn("Não ta dentro da área");
-                     Main.logger.warn("Não ta dentro da área");
-                     Main.logger.warn("Não ta dentro da área");
-                     Main.logger.warn("Não ta dentro da área");
                      for(int i = 0; i < Utils.locations.size(); i++) {
                          LocationProfile pf = Utils.locations.get(i);
-                         Main.logger.warn("área " + pf);
                          if(pf.insideArea((int)pl.posX, (int)pl.posZ)) {
                              location = pf.getName();
                              locId = i;
-
-                             Main.logger.warn("achei a área " + pf);
-                             Main.logger.warn("achei a área " + pf);
-                             Main.logger.warn("achei a área " + pf);
 
                              Main.updateRichPresence("World " + Main.actualServer.replace("WC", ""), "At " + Main.location, null);
                              break;
