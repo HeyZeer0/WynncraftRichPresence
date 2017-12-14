@@ -48,9 +48,6 @@ public class LocationGUI extends Gui {
         String loc = location;
         last_loc = loc;
 
-
-        showing = true;
-
         if(loc.length() >= 15) {
             loc = loc.substring(0, loc.length() - (loc.length() - 15));
             loc = loc + "...";
@@ -59,6 +56,8 @@ public class LocationGUI extends Gui {
         if(!showing) {
             savedLoc = loc;
         }
+
+        showing = true;
 
         drawRect(0, 0 - size, 143, 43 - size, -2500134);
         drawRect(0, 0 - size, 140, 40 - size, -10066329);

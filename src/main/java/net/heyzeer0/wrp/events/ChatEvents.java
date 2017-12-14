@@ -6,6 +6,7 @@ import net.heyzeer0.wrp.guis.LocationGUI;
 import net.heyzeer0.wrp.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,7 +22,7 @@ import java.net.URL;
  */
 public class ChatEvents {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     @SideOnly(value = Side.CLIENT)
     public void onChatReceive(ClientChatReceivedEvent e) {
         if(e.getMessage().getFormattedText().toLowerCase().contains("loading the wynnpack...")) {
@@ -41,7 +42,7 @@ public class ChatEvents {
 
             return;
         }
-        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now entering")) {
+        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now entering") && !e.getMessage().getFormattedText().contains("/")) {
             if(ConfigManager.enteringNotifier) {
                 String loc = e.getMessage().getFormattedText();
                 LocationGUI.location = Utils.stripColor(loc.replace("[You are now entering ", "").replace("]", ""));
@@ -49,7 +50,7 @@ public class ChatEvents {
             }
             return;
         }
-        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now leaving")) {
+        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now leaving") && !e.getMessage().getFormattedText().contains("/")) {
             if(ConfigManager.enteringNotifier) {
                 LocationGUI.last_loc = "Waiting";
                 LocationGUI.location = "Waiting";
