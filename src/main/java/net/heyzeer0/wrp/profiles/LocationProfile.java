@@ -15,7 +15,23 @@ public class LocationProfile {
     int endZ;
 
     public LocationProfile(String name, int startX, int startZ, int endX, int endZ) {
-        this.name = name; this.startX = startX; this.startZ = startZ; this.endX = endX; this.endZ = endZ;
+        this.name = name;
+
+        if(endX < startX) {
+            this.startX = endX;
+            this.endX = startX;
+        }else{
+            this.startX = startX;
+            this.endX = endX;
+        }
+
+        if(endZ < startZ) {
+            this.startZ = endZ;
+            this.endZ = startZ;
+        }else{
+            this.startZ = startZ;
+            this.endZ = endZ;
+        }
     }
 
     public String getName() {

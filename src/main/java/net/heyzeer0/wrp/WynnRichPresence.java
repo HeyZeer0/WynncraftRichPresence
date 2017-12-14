@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Mod(name = "WynncraftRichPresence", modid = Reference.MOD_ID, clientSideOnly = true, acceptedMinecraftVersions = "[1.10.2,1.11.2]", version = Reference.MOD_VERSION, guiFactory = "net.heyzeer0.wrp.config.ConfigFactory")
+@Mod(name = "WynncraftRichPresence", modid = Reference.MOD_ID, clientSideOnly = true, acceptedMinecraftVersions = "[1.10.2,1.12.2]", version = Reference.MOD_VERSION, guiFactory = "net.heyzeer0.wrp.config.ConfigFactory")
 public class WynnRichPresence {
 
     @Mod.EventHandler

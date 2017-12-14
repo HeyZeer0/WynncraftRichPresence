@@ -1,6 +1,9 @@
 package net.heyzeer0.wrp.events;
 
 import net.heyzeer0.wrp.Main;
+import net.heyzeer0.wrp.config.ConfigManager;
+import net.heyzeer0.wrp.guis.LocationGUI;
+import net.heyzeer0.wrp.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,10 +36,25 @@ public class ChatEvents {
 
                     Main.startUpdateRegionName();
 
-
                 }catch (Exception ex) { Main.logger.warn("Cannot update status", ex); }
             }).start();
 
+            return;
+        }
+        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now entering")) {
+            if(ConfigManager.enteringNotifier) {
+                String loc = e.getMessage().getFormattedText();
+                LocationGUI.location = Utils.stripColor(loc.replace("[You are now entering ", "").replace("]", ""));
+                e.setCanceled(true);
+            }
+            return;
+        }
+        if(e.getMessage().getFormattedText().toLowerCase().contains("you are now leaving")) {
+            if(ConfigManager.enteringNotifier) {
+                LocationGUI.last_loc = "Waiting";
+                LocationGUI.location = "Waiting";
+                e.setCanceled(true);
+            }
             return;
         }
     }

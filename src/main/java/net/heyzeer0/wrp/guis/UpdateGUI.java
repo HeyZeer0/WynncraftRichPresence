@@ -28,8 +28,8 @@ public class UpdateGUI extends Gui {
     }
 
     @SubscribeEvent(priority= EventPriority.NORMAL)
-    public void onRenderExperienceBar(RenderGameOverlayEvent.Post event) {
-        if(event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE) {
+    public void onRenderExperienceBar(RenderGameOverlayEvent.Post e) {
+        if(e.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
 
