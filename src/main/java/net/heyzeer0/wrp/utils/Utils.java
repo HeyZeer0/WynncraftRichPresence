@@ -46,4 +46,13 @@ public class Utils {
         return input == null ? null : STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
+    public static String removeAfterChar(String x, int amount) {
+        String toReturn = x;
+        if(toReturn.length() > amount) {
+            toReturn = toReturn.substring(0, toReturn.length() - (toReturn.length() - amount));
+            toReturn = toReturn + "...";
+        }
+        return toReturn;
+    }
+
 }

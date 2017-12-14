@@ -1,43 +1,39 @@
-package net.heyzeer0.wrp.guis;
+package net.heyzeer0.wrp.guis.overlay;
 
 import net.heyzeer0.wrp.Main;
-import net.heyzeer0.wrp.config.ConfigManager;
+import net.heyzeer0.wrp.config.ConfigValues;
+import net.heyzeer0.wrp.guis.WRPGui;
+import net.heyzeer0.wrp.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created by HeyZeer0 on 12/12/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class LocationGUI extends Gui {
+public class LocationGUI extends WRPGui {
 
     public static String location = "Waiting";
     public static String last_loc = "Waiting";
 
-    private Minecraft mc;
     int size = 50;
     long timeout = System.currentTimeMillis();
 
     boolean showing = false;
     boolean animation = false;
 
-    String savedLoc;
-
     public LocationGUI(Minecraft mc) {
-        super();
-        this.mc = mc;
+        super(mc);
     }
 
     @SubscribeEvent(priority= EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post e) {
-        if(!ConfigManager.enteringNotifier || !Main.onServer) {
+        if(e.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
-        if(e.getType() != RenderGameOverlayEvent.ElementType.ALL) {
+        if(!ConfigValues.enteringNotifier || !Main.getData().onServer()) {
             return;
         }
 
@@ -45,16 +41,8 @@ public class LocationGUI extends Gui {
             return;
         }
 
-        String loc = location;
-        last_loc = loc;
-
-        if(loc.length() >= 15) {
-            loc = loc.substring(0, loc.length() - (loc.length() - 15));
-            loc = loc + "...";
-        }
-
         if(!showing) {
-            savedLoc = loc;
+            last_loc = Utils.removeAfterChar(location, 15);
         }
 
         showing = true;
@@ -62,10 +50,8 @@ public class LocationGUI extends Gui {
         drawRect(0, 0 - size, 143, 43 - size, -2500134);
         drawRect(0, 0 - size, 140, 40 - size, -10066329);
 
-        drawString(mc.fontRendererObj, "§a§lYou are now entering", 5, 5 - size, -1);
-        GL11.glScalef(1.5f, 1.5f, 1.5f);
-        drawString(mc.fontRendererObj, "§e" + savedLoc, 7,13 - size, 13782543);
-        GL11.glScalef(1, 1, 1);
+        drawString("§a§lYou are now entering", 5, 5 - size, -1);
+        drawString("§e" + last_loc, 7,13 - size, 1.5f, 13782543);
 
         if(size > 0 && !animation) {
             size-=1;

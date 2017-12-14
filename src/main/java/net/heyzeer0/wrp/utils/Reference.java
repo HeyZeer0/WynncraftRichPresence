@@ -6,7 +6,7 @@ package net.heyzeer0.wrp.utils;
  */
 public class Reference {
 
-    public static final String MOD_VERSION = "1.0.5";
+    public static final String MOD_VERSION = "1.0.6";
     public static final String MOD_ID = "wynnrp";
 
 }

@@ -1,5 +1,6 @@
-package net.heyzeer0.wrp.utils;
+package net.heyzeer0.wrp.profiles;
 
+import net.heyzeer0.wrp.utils.Reference;
 import org.apache.commons.io.IOUtils;
 
 import java.net.URL;
@@ -9,13 +10,12 @@ import java.net.URLConnection;
  * Created by HeyZeer0 on 05/12/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class Updater {
+public class UpdateProfile {
 
-    public static boolean sended = false;
-    public static boolean hasUpdate = false;
-    public static String latestUpdate = Reference.MOD_VERSION;
+    boolean hasUpdate = false;
+    String latestUpdate = Reference.MOD_VERSION;
 
-    public static void checkForUpdates() {
+    public UpdateProfile() {
         new Thread(() -> {
             try{
                 URLConnection st = new URL("http://dl.heyzeer0.cf/WynnRP/version").openConnection();
@@ -27,6 +27,14 @@ public class Updater {
                 }
             }catch(Exception ignored) { ignored.printStackTrace(); }
         }).start();
+    }
+
+    public boolean hasUpdate() {
+        return hasUpdate;
+    }
+
+    public String getLatestUpdate() {
+        return latestUpdate;
     }
 
 }

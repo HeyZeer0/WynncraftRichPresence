@@ -17,7 +17,7 @@ public class ServerEvents {
     @SubscribeEvent
     @SideOnly(value = Side.CLIENT)
     public void onServerJoin(FMLNetworkEvent.ClientConnectedToServerEvent e) {
-        if(!Main.ready) {
+        if(!Main.getRichPresence().isReady()) {
             return;
         }
 
@@ -33,15 +33,21 @@ public class ServerEvents {
             return;
         }
 
-        Main.updateRichPresence("At Lobby", null, null);
-        Main.onServer = true;
+        Main.getRichPresence().updateRichPresence("At Lobby", null, null);
+        Main.getData().setOnServer(true);
     }
 
     @SubscribeEvent
     @SideOnly(value = Side.CLIENT)
     public void onServerLeave(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
-        Main.stopRichPresence();
-        Main.onServer = false;
+        if(Main.getData().onServer()) {
+            Main.getRichPresence().stopRichPresence();
+            Main.getData().setOnServer(false);
+
+            if(ChatEvents.updateTimer != null && !ChatEvents.updateTimer.isCancelled()) {
+                ChatEvents.updateTimer.cancel(true);
+            }
+        }
     }
 
 }

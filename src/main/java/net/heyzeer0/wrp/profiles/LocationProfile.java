@@ -1,7 +1,5 @@
 package net.heyzeer0.wrp.profiles;
 
-import net.heyzeer0.wrp.Main;
-
 /**
  * Created by HeyZeer0 on 11/12/2017.
  * Copyright © HeyZeer0 - 2016

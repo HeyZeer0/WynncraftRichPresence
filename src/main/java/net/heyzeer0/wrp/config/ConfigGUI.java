@@ -12,7 +12,7 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 public class ConfigGUI extends GuiConfig {
 
     public ConfigGUI(GuiScreen parentScreen) {
-        super(parentScreen, new ConfigElement(ConfigManager.getConfig().getCategory("main")).getChildElements(), Reference.MOD_ID, false, false, "WynncraftRichPresence Configurations");
+        super(parentScreen, new ConfigElement(ConfigManager.getConfig().getCategory("main")).getChildElements(), Reference.MOD_ID, false, false, "WynncraftRichPresence Configurations", "Fell free to change anything here");
     }
 
 }

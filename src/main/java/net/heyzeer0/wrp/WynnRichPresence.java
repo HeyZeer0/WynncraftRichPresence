@@ -2,7 +2,7 @@ package net.heyzeer0.wrp;
 
 import net.heyzeer0.wrp.config.ConfigManager;
 import net.heyzeer0.wrp.utils.Reference;
-import net.heyzeer0.wrp.utils.Updater;
+import net.heyzeer0.wrp.profiles.UpdateProfile;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -19,7 +19,6 @@ public class WynnRichPresence {
         Main.logger = e.getModLog();
         ConfigManager.registerConfig(e);
         Main.startRichPresence();
-        Updater.checkForUpdates();
     }
 
 }
